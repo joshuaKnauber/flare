@@ -1,4 +1,4 @@
-# Flare - The most powerful text input..
+# Flare - The most powerful text input (not quite yet..)
 
 Flare gives you an input a shortcut that opens a text input. That's it. But also not...
 
@@ -38,7 +38,7 @@ npm run tauri build
 
 - [ ] Figure out transparent windows so more things can be displayed as return values
 - [ ] Improve reliability of opening, focusing and closing with shortcuts
-- [ ] Experiment with function descriptions to trigger not just correct but also preferred (e.g. open url vs search google)
+- [ ] Experiment with function descriptions to trigger not just correct but also preferred (e.g. open url vs search google / or use more specific functions / double descriptions?)
 - [ ] Experiment with 3.5 vs 4 (especially regarding speed)
 - [ ] Display return values from functions
 - [ ] Display auto complete suggestions as you type based on previous runs and context of open programs (complete with tab)
@@ -56,3 +56,18 @@ npm run tauri build
 
 - [ ] Consider even more interactive functions with custom uis
 - [ ] Deeper integration into what you're doing in the UI -> make more relevant suggestions before you even type (e.g. based on selection, based on images, based on program, based on time, calendar, music, ...)
+
+## Functions
+
+- [ ] Open Website
+- [ ] Google search
+- [ ] Youtube search
+- [ ] Open program
+- [ ] Calculator
+- [ ] Timer
+- [ ] Converter
+- [ ] Meta commands (enable, disable, list, ...)
+- [ ] Translate
+- [ ] Get weather
+- [ ] Tick Tick (add task)
+- [ ] Spotify (play, pause, next, previous, ...)
