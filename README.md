@@ -36,13 +36,13 @@ npm run tauri build
 
 ## TODO
 
-- [ ] Figure out transparent windows so more things can be displayed as return values
+- [x] Figure out transparent windows so more things can be displayed as return values
 - [ ] Improve reliability of opening, focusing and closing with shortcuts
-- [ ] Experiment with function descriptions to trigger not just correct but also preferred (e.g. open url vs search google / or use more specific functions / double descriptions?)
-- [ ] Experiment with 3.5 vs 4 (especially regarding speed)
+- [x] Experiment with function descriptions to trigger not just correct but also preferred (e.g. open url vs search google / or use more specific functions / double descriptions?)
+- [x] Experiment with 3.5 vs 4 (especially regarding speed)
 - [ ] Display return values from functions
 - [ ] Display auto complete suggestions as you type based on previous runs and context of open programs (complete with tab)
-- [ ] Styling
+- [x] Styling
 - [ ] Add more functions
 
 ---
@@ -59,14 +59,15 @@ npm run tauri build
 
 ## Functions
 
-- [ ] Open Website
-- [ ] Google search
-- [ ] Youtube search
+- [x] Open Website
+- [x] Google search
+- [x] Youtube search
 - [ ] Open program
 - [ ] Calculator
 - [ ] Timer
 - [ ] Converter
 - [ ] Meta commands (enable, disable, list, ...)
+- [x] Open config file explorer
 - [ ] Translate
 - [ ] Get weather
 - [ ] Tick Tick (add task)

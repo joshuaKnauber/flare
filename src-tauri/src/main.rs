@@ -1,10 +1,16 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use tauri::{SystemTray, SystemTrayEvent, SystemTrayMenu, CustomMenuItem, Manager, AppHandle};
+use tauri::{SystemTray, SystemTrayEvent, Position, SystemTrayMenu, CustomMenuItem, Manager, AppHandle};
+use window_vibrancy::{apply_blur};
+use enigo::*;
 
 #[tauri::command]
 fn show_window(app_handle: AppHandle) {
+    // move to mouse position
+    let enigo = Enigo::new();
+    let (x, y) = enigo.mouse_location();
+    app_handle.get_window("main").unwrap().set_position(Position::Physical((x, y).into())).unwrap();
     // show the window
     app_handle.get_window("main").unwrap().show().unwrap();
     // bring the window to the front
@@ -25,6 +31,15 @@ fn main() {
     let tray = SystemTray::new().with_menu(tray_menu);
 
     tauri::Builder::default()
+    .setup(|app| {
+      let window = app.get_window("main").unwrap();
+
+      #[cfg(target_os = "windows")]
+      apply_blur(&window, Some((0, 0, 0, 0)))
+        .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
+
+      Ok(())
+    })
     .system_tray(tray)
     .on_system_tray_event(|app, event| match event {
         SystemTrayEvent::LeftClick {

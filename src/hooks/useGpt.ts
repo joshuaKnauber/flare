@@ -11,7 +11,7 @@ import { getFunctionPath } from "@/utils/config";
 const SYSTEM_MSG: ChatCompletionResponseMessage = {
   role: "system",
   content:
-    "You are managing a smart search bar on the users desktop. You should never answer directly if you have an alternative, try to find the action that saves the most amount of time and clicks for the user. This includes choosing one action over the other because it will save a step that the user would have to do anyways.",
+    "You are managing an intelligent search bar on the users desktop. You should never answer directly if you have an alternative, try to find the action that saves the most amount of time and clicks for the user.",
 };
 
 const useGpt = () => {
@@ -20,7 +20,9 @@ const useGpt = () => {
   const [openai, setOpenai] = useState<OpenAIApi>();
   const [processing, setProcessing] = useState<boolean>(false);
 
-  const [history, setHistory] = useState<ChatCompletionResponseMessage[]>([]);
+  const [history, setHistory] = useState<ChatCompletionResponseMessage[]>([
+    SYSTEM_MSG,
+  ]);
 
   const processInput = async (text: string) => {
     if (!openai) return "OpenAI not configured";
@@ -35,7 +37,7 @@ const useGpt = () => {
       ];
       const chatCompletion = await openai.createChatCompletion({
         model: config.model,
-        temperature: 0.1,
+        temperature: 0,
         messages: newHistory,
         functions: functions.map((f) => ({
           name: f.name,
@@ -56,28 +58,14 @@ const useGpt = () => {
 
         const path = await getFunctionPath(functionConfig.path);
 
-        const values = Object.values(parameters) as string[];
-        // const output = await new Command("python", [path, ...values]).execute();
-        const command = new Command("python", [path, ...values]);
-        command.on("close", (data) => {
-          console.log(
-            `command finished with code ${data.code} and signal ${data.signal}`
-          );
-        });
-        command.on("error", (error) =>
-          console.error(`command error: "${error}"`)
+        const values = Object.values(parameters).map((v) =>
+          (v as any).toString()
         );
-        command.stdout.on("data", (line) =>
-          console.log(`command stdout: "${line}"`)
-        );
-        command.stderr.on("data", (line) =>
-          console.log(`command stderr: "${line}"`)
-        );
-        const child = await command.spawn();
+        const output = await new Command("python", [path, ...values]).execute();
 
-        // if (output.code === 1 && output.stderr) {
-        //   returnValue = output.stderr;
-        // }
+        if (output.code === 1 && output.stderr) {
+          returnValue = output.stderr;
+        }
       } else {
         returnValue = answer.content || "";
       }
